@@ -53,3 +53,5 @@ try {
 } catch (Exception $e) {
     echo "Mailer Error: " . $mail->ErrorInfo;
 }
+
+NOTE:- Keep in mind you cannot use a free Gmail account etc. You need something like GSuite, SendGrid, or Amazon SES.
