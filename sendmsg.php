@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 //Open a new connection to the MySQL server
-$mysqli = new mysqli('localhost', 'root', 'Phpmyadmin@123', 'perfectcup');
+$mysqli = new mysqli('localhost', 'root', '', 'perfectcup');
 
 //Output any connection error
 if ($mysqli->connect_error) {
@@ -52,11 +52,11 @@ $mail->From = $email;
 $mail->FromName = $fname;
 
 //To address and name
-$mail->addAddress($email2, "Kavya");
+$mail->addAddress("recepient1@example.com", "Recepient Name");
 $mail->addAddress("recepient1@example.com"); //Recipient name is optional
 
 //Address to which recipient will reply
-$mail->addReplyTo("kavyasaitammina@gmail.com", "Reply");
+$mail->addReplyTo("reply@yourdomain.com", "Reply");
 
 
 
