@@ -1,4 +1,6 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 //Open a new connection to the MySQL server
 $mysqli = new mysqli('localhost', 'root', 'Phpmyadmin@123', 'perfectcup');
@@ -12,7 +14,7 @@ $fname = mysqli_real_escape_string($mysqli, $_POST['fname']);
 $email = mysqli_real_escape_string($mysqli, $_POST['email']);
 $message= mysqli_real_escape_string($mysqli, $_POST['message']);
 
-$email2 = "";
+$email2 = "kavyasaitammina@gmail.com";
 $subject = "Test Message";
 
 if (strlen($fname) > 50) {
@@ -40,35 +42,31 @@ if (strlen($fname) > 50) {
 	
 	 //MAILER
 
-    require 'phpmailer/PHPMailerAutoload.php';
+require_once "vendor/autoload.php";
 
-    $mail = new PHPMailer;
-	
-	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+//PHPMailer Object
+$mail = new PHPMailer(true); //Argument true in constructor enables exceptions
 
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = '';                 // SMTP username
-    $mail->Password = '';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
+//From email address and name
+$mail->From = $email;
+$mail->FromName = $fname;
 
-	$mail->AddReplyTo($email);
-    $mail->From = $email2;
-    $mail->FromName = $fname;
-    $mail->addAddress('', 'Admin');     // Add a recipient
+//To address and name
+$mail->addAddress($email2, "Kavya");
+$mail->addAddress("recepient1@example.com"); //Recipient name is optional
 
-    $mail->isHTML(true);                                  // Set email format to HTML
+//Address to which recipient will reply
+$mail->addReplyTo("kavyasaitammina@gmail.com", "Reply");
 
-    $mail->Subject = $subject;
-    $mail->Body = $message;
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-    if (!$mail->send()) {
-        echo 'Message could not be sent.';
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
-    } else {
+
+try {
+    $mail->send();
+    echo "Message has been sent successfully";
+} catch (Exception $e) {
+    echo "Mailer Error: " . $mail->ErrorInfo;
+}
+    else {
         echo 'true';
     }
 
