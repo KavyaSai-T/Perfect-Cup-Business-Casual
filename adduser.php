@@ -2,7 +2,7 @@
 session_start();
 
 //Open a new connection to the MySQL server
-$mysqli = new mysqli('localhost', 'root', 'Phymyadmin@123', 'perfectcup');
+$mysqli = new mysqli('localhost', 'root', '', 'perfectcup');
 
 //Output any connection error
 if ($mysqli->connect_error) {
