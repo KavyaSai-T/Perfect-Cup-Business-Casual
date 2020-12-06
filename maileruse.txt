@@ -1,0 +1,55 @@
+PHPMailer is a code library and used to send emails safely and easily via PHP code from a web server. Sending emails directly via PHP code requires a high-level familiarity to SMTP standard protocol and related issues and vulnerabilities about Email injection for spamming. PHPMailer simplifies the process of sending emails and it is very easy to use.
+
+Installation: The best way to install PHPMailer is by using composer. Before proceeding make sure to install composer.
+
+Open the Command prompt and go to the directory of the project in which you want to use PHPMailer.
+Run the following command:
+---composer require phpmailer/phpmailer---
+Wait for the installation to complete. It will download all the necessary classes to your project folder.
+Using PHPMailer:
+Import the PHPMailer classe into the global namespace.
+Note: Make sure that these lines are at the top of the script not inside any function.
+
+---use PHPMailer\PHPMailer\PHPMailer;---
+---use PHPMailer\PHPMailer\Exception;---
+Load the composer’s autoloader.
+
+---require 'vendor/autoload.php';---
+
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once "vendor/autoload.php";
+
+//PHPMailer Object
+$mail = new PHPMailer(true); //Argument true in constructor enables exceptions
+
+//From email address and name
+$mail->From = "from@yourdomain.com";
+$mail->FromName = "Full Name";
+
+//To address and name
+$mail->addAddress("recepient1@example.com", "Recepient Name");
+$mail->addAddress("recepient1@example.com"); //Recipient name is optional
+
+//Address to which recipient will reply
+$mail->addReplyTo("reply@yourdomain.com", "Reply");
+
+//CC and BCC
+$mail->addCC("cc@example.com");
+$mail->addBCC("bcc@example.com");
+
+//Send HTML or Plain Text email
+$mail->isHTML(true);
+
+$mail->Subject = "Subject Text";
+$mail->Body = "<i>Mail body in HTML</i>";
+$mail->AltBody = "This is the plain text version of the email content";
+
+try {
+    $mail->send();
+    echo "Message has been sent successfully";
+} catch (Exception $e) {
+    echo "Mailer Error: " . $mail->ErrorInfo;
+}
